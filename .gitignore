@@ -4,6 +4,9 @@
 # The Program files
 *.img
 
+# bak files
+*.bak
+
 # Compiled Dynamic libraries
 *.so
 
