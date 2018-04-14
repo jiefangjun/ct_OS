@@ -1,5 +1,11 @@
 #include "common.h"
 
+/*
+ * %1代表输入，%0代表输出，输出要加"="号，a和dN代表寄存器约束
+ * 行与行直接：分隔开
+ * 最后一项代表 clobered register 即变动过的寄存器，需要GCC将其恢复原样
+ */
+
 //端口写一个字节
 inline void outb(uint16_t port, uint8_t value)
 {
