@@ -45,6 +45,6 @@ struct elf_t {
 elf_t elf_from_multiboot(multiboot_t *mb);
 
 //查看ELF的符号信息
-const char *elf_look_symbol(uint32_t addr, elf_t *elf);
+const char *elf_lookup_symbol(uint32_t addr, elf_t *elf);
 
 #endif

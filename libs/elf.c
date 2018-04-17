@@ -19,7 +19,7 @@ elf_t elf_from_multiboot(multiboot_t *mb)
 
 		// 在GRUB提供的multiboot 信息中寻找
 		// 内核ELF 格式所提取的字符串表和符号表
-		
+		// 根据ELF 头部所存放的是 strtab 还是 symtab 来提取对应信息	
 		if(strcmp(name, ".strtab") == 0) {
 			elf.strtab = (const char *)sh[i].addr;
 			elf.strtabsz = sh[i].size;
