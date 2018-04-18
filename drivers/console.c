@@ -87,6 +87,8 @@ void console_putc_color(char c, real_color_t back, real_color_t fore)
 		cursor_x = (cursor_x + 8) & ~(8-1);
 	} else if(c == '\r') {
 		cursor_x = 0;
+	} else if(c == '\n') {
+		cursor_x = 0;
 		cursor_y++;
 	} else if(c >= ' ') {
 		video_memory[cursor_y * 80 + cursor_x] = c | attribute;
@@ -106,6 +108,7 @@ void console_putc_color(char c, real_color_t back, real_color_t fore)
 	move_cursor();
 }
 
+// 屏幕打印一个以 \0 结尾的字符串 默认黑底白字
 void console_write(char *cstr)
 {
 	while (*cstr) {
@@ -113,6 +116,7 @@ void console_write(char *cstr)
 	}
 }
 
+// 屏幕打印一个以 \0 结尾的字符串 带颜色
 void console_write_color(char *cstr, real_color_t back, real_color_t fore)
 {
 	while(*cstr) {
@@ -120,4 +124,56 @@ void console_write_color(char *cstr, real_color_t back, real_color_t fore)
 	}
 }
 
+// 屏幕输出一个十六进制的整形数
+void console_write_hex(uint32_t n, real_color_t back, real_color_t fore)
+{
+	int tmp;
+	char noZeroes = 1;
+
+	console_write_color("0x", back, fore);
+
+	int i;
+	for(i = 28; i >= 0; i -=4) {
+		tmp = (n >> i) & 0xF;
+		if(tmp == 0 && noZeroes != 0) {
+			continue;
+		}
+		noZeroes = 0;
+		if(tmp >= 0xA) {
+			console_putc_color(tmp-0xA+'a', back, fore);
+		}
+		else {
+			console_putc_color(tmp+'0', back, fore);
+		}
+	}
+}
+
+// 屏幕输出一个十进制的整形数
+void console_write_dec(uint32_t n, real_color_t back, real_color_t fore)
+{
+	if(n == 0) {
+		console_putc_color('0', back, fore);
+		return;
+	}
+
+	uint32_t acc = n;
+	char c[32];
+	int i = 0;
+	while(acc > 0) {
+		c[i] = '0' + acc % 10;
+		acc /= 10;
+		i++;
+	}
+	c[i] = 0;
+
+	char c2[32];
+	c2[i--] = 0;
+
+	int j = 0;
+	while(i >= 0) {
+		c2[i--] = c[j++];
+	}
+
+	console_write_color(c2, back, fore);
+}
 

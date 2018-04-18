@@ -236,7 +236,7 @@ static int vsprintf(char *buff, const char *format, va_list args)
 				}
 				*str++ = (unsigned char) va_arg(args, int);
 				while (--field_width > 0) {
-					*str++;
+					*str++ = ' ';
 				}
 				break;
 			case 's':
@@ -251,7 +251,7 @@ static int vsprintf(char *buff, const char *format, va_list args)
 
 				if(!(flags & LEFT)) {
 					while(len < field_width--) {
-						*str++;
+						*str++ = ' ';
 					}
 				}
 
@@ -295,6 +295,11 @@ static int vsprintf(char *buff, const char *format, va_list args)
 			case 'b':
 				str = number(str, va_arg(args, unsigned long), 2,
 						field_width, precision, flags);
+				break;
+
+			case 'n':
+				ip = va_arg(args, int *);
+				*ip = (str - buff);
 				break;
 				
 			default:
