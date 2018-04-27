@@ -9,6 +9,8 @@ SECTIONS
 	
 	/*内核从内存中的起始位置*/
 	. = 0x100000;
+	/* 提供内核起始位置地址*/
+	PROVIDE(kern_start = . );
 	.text :
 	{
 		*(.text)
@@ -39,6 +41,9 @@ SECTIONS
 		*(.stabstr)
 		. = ALIGN(4096);
 	}
+	/* 提供内核结束位置地址*/
+	PROVIDE(kern_end = . );
+
 
 	/DISCARD/ : { *(.comment) *(.eh_frame) }
 }
