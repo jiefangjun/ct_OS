@@ -34,7 +34,7 @@ int kern_entry()
 	show_memory_map();
 	init_pmm();
 
-	printk(rc_black, rc_green, "\nThe Count of Physical Memory Page is: %u\n\n", phy_page_count);
+	printk_color(rc_black, rc_green, "\nThe Count of Physical Memory Page is: %u\n\n", phy_page_count);
 
 	uint32_t allc_addr = NULL;
 	printk_color(rc_black, rc_light_brown, "Test Physical Memory Alloc :\n");
