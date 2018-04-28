@@ -6,44 +6,51 @@ ENTRY(start)
 SECTIONS
 {
 	/*段起始位置*/
-	
-	/*内核从内存中的起始位置*/
-	. = 0x100000;
+
 	/* 提供内核起始位置地址*/
-	PROVIDE(kern_start = . );
-	.text :
+	PROVIDE(kern_start = 0xC0100000);
+	
+	/*内核从内存中的起始位置,依然要从这个地方开始*/
+	. = 0x100000;
+	.init.text :
+	{
+		*(.init.text)
+		. = ALIGN(4096);
+	}
+	.init.data :
+	{
+		*(.init.data)
+		. = ALIGN(4096);
+	}
+
+	. += 0xC0000000;
+	.text : AT(ADDR(.text) - 0xC0000000)
 	{
 		*(.text)
 		. = ALIGN(4096);
 	}
-
-	.data :
+	.data : AT(ADDR(.data) - 0xC0000000)
 	{
 		*(.data)
 		*(.rodata)
 		. = ALIGN(4096);
 	}
-
-	.bss :
+	.bss : AT(ADDR(.bss) - 0xC0000000)
 	{
 		*(.bss)
 		. = ALIGN(4096);
 	}
-
-	.stab :
+	.stab : AT(ADDR(.stab) - 0xC0000000)
 	{
 		*(.stab)
 		. = ALIGN(4096);
 	}
-
-	.stabstr :
+	.stabstr : AT(ADDR(.stabstr) - 0xC0000000)
 	{
 		*(.stabstr)
 		. = ALIGN(4096);
 	}
-	/* 提供内核结束位置地址*/
-	PROVIDE(kern_end = . );
-
+	PROVIDE( kern_end = . );
 
 	/DISCARD/ : { *(.comment) *(.eh_frame) }
 }
