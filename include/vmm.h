@@ -6,7 +6,7 @@
 #include "vmm.h"
 
 // 内核的偏移地址
-#define PAGE_OFFSET     0xC0000000
+#define PAGE_OFFSET     0x100000000
 
 /**
  * P-- 位 0 是存在 (Present) 标志，用于指明表项对地址转换是否有效。
