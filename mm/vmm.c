@@ -48,7 +48,7 @@ void switch_pgd(uint32_t pd)
 void map(pgd_t *pgd_now, uint32_t va, uint32_t pa, uint32_t flags)
 {
 	uint32_t pgd_idx = PGD_INDEX(va);
-	uint32_t pte_idx = PGD_INDEX(va);
+	uint32_t pte_idx = PTE_INDEX(va);
 
 	pte_t *pte = (pte_t *)(pgd_now[pgd_idx] & PAGE_MASK);
 	if(!pte) {

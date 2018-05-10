@@ -1,3 +1,4 @@
+#include "heap.h"
 #include "vmm.h"
 #include "pmm.h"
 #include "timer.h"
@@ -91,6 +92,9 @@ void kern_init()
 	show_memory_map();
 	init_pmm();
 
+	init_vmm();
+	init_heap();
+
 	printk_color(rc_black, rc_green, "\nThe Count of Physical Memory Page is: %u\n\n", phy_page_count);
 
 	uint32_t allc_addr = NULL;
@@ -103,6 +107,10 @@ void kern_init()
 	printk_color(rc_black, rc_light_brown, "Alloc Physical Addr: 0x%08X\n", allc_addr);
 	allc_addr = pmm_alloc_page();
 	printk_color(rc_black, rc_light_brown, "Alloc Physical Addr: 0x%08X\n", allc_addr);
+
+	printk("\n");
+
+	test_heap();
 
 	while(1) {
 		asm volatile("hlt");
