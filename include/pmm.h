@@ -1,3 +1,7 @@
+/*
+ * 内存页面管理
+ */
+
 #ifndef INCLUDE_PMM_H
 #define INCLUDE_PMM_H
 
@@ -25,6 +29,9 @@ extern uint8_t kern_end[];
 
 // 输出BIOS 提供的物理内存布局
 void show_memory_map();
+
+// 内核栈的栈顶
+extern uint32_t kern_stack_top;
 
 // 动态分配物理内存页的总数
 extern uint32_t phy_page_count;

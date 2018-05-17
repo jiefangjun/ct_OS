@@ -1,4 +1,4 @@
 file ct_kernel
 target remote :1234
-break test_heap
+break init_sched
 c
